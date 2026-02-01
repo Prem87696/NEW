@@ -1,30 +1,30 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<h2>PK Chatbot (Level-1)</h2>
-
-<input id="q" placeholder="HTML kya hai">
-<button onclick="reply()">Ask</button>
-
-<p id="ans"></p>
-
-<script>
+<script id="smart-bot">
 function reply() {
-  const q = document.getElementById("q").value.toLowerCase();
-  let a = "Mujhe samajh nahi aaya";
+  const q = document.getElementById("q").value.toLowerCase().trim();
+  let a = "Mujhe samajh nahi aaya 😅";
 
-  if (q.includes("html")) {
-    a = "HTML ek markup language hai jo website banane ke kaam aati hai";
-  } else if (q.includes("css")) {
-    a = "CSS website ko design karne ke liye hoti hai";
-  } else if (q.includes("javascript")) {
-    a = "JavaScript website ko interactive banati hai";
+  if (q === "") {
+    a = "Kuch likho to sahi 🙂";
+  }
+  else if (q.includes("html")) {
+    a = "HTML ek markup language hai jo website ka structure banati hai";
+  }
+  else if (q.includes("css")) {
+    a = "CSS website ko design aur beautiful banati hai";
+  }
+  else if (q.includes("javascript") || q === "js") {
+    a = "JavaScript website ko interactive aur smart banati hai";
+  }
+  else if (q.includes("tum kaun ho")) {
+    a = "Main PK ka smart chatbot hoon 😎";
+  }
+  else if (q.includes("hello") || q.includes("hi")) {
+    a = "Hello PK 👋 kaise ho?";
+  }
+  else if (q.includes("bye")) {
+    a = "Bye PK 👋 phir milenge";
   }
 
   document.getElementById("ans").innerText = a;
 }
 </script>
-
-</body>
-</html>
