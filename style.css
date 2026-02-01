@@ -1,1 +1,31 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #0f172a;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
 
+.app {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #020617;
+  border-radius: 12px;
+  text-align: center;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #22c55e;
+  color: #000;
+}
+
+p {
+  margin-top: 15px;
+  font-size: 14px;
+}
