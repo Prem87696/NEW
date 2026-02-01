@@ -1,52 +1,44 @@
-/***********************
+/*************************
  PK VOICE ASSISTANT
- Level-1 (Working)
-***********************/
+ FINAL WORKING SCRIPT
+**************************/
 
-// 🔑 APNI GEMINI API KEY YAHA PASTE KARO
-const API_KEY = "AIzaSyDZZCfe-7-Sz4Dhqab17oOyWP43S7xJrBA";
+const API_KEY = "AIzaSyDZZCfe-7-Sz4Dhqab17oOyWP43S7xJrBA"; // apni key
 
-// ========= ELEMENTS =========
+// Elements
 const startBtn = document.getElementById("startBtn");
 const userText = document.getElementById("userText");
 const aiText = document.getElementById("aiText");
 
-// ========= SPEECH RECOGNITION =========
+// Speech Recognition
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
-if (!SpeechRecognition) {
-  alert("Your browser does not support Speech Recognition");
-}
-
 const recognition = new SpeechRecognition();
-recognition.lang = "hi-IN"; // Hindi + Hinglish
+recognition.lang = "hi-IN";
 recognition.interimResults = false;
 
-// ========= BUTTON CLICK =========
-startBtn.addEventListener("click", () => {
-  aiText.textContent = "Listening...";
+// Button click
+startBtn.onclick = () => {
+  aiText.innerText = "Listening...";
   recognition.start();
-});
+};
 
-// ========= WHEN USER SPEAKS =========
+// User speech result
 recognition.onresult = (event) => {
-  const spokenText = event.results[0][0].transcript;
-  userText.textContent = spokenText;
-  getAIResponse(spokenText);
+  const text = event.results[0][0].transcript;
+  userText.innerText = text;
+  askGemini(text);
 };
 
-recognition.onerror = (event) => {
-  aiText.textContent = "Mic error: " + event.error;
-};
-
-// ========= GEMINI API CALL =========
-async function getAIResponse(prompt) {
-  aiText.textContent = "Thinking...";
+// Ask Gemini
+async function askGemini(prompt) {
+  aiText.innerText = "Thinking...";
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+    const res = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" +
+        API_KEY,
       {
         method: "POST",
         headers: {
@@ -55,7 +47,6 @@ async function getAIResponse(prompt) {
         body: JSON.stringify({
           contents: [
             {
-              role: "user",
               parts: [{ text: prompt }]
             }
           ]
@@ -63,25 +54,31 @@ async function getAIResponse(prompt) {
       }
     );
 
-    const data = await response.json();
-    console.log("Gemini Response:", data);
+    const data = await res.json();
+    console.log("FULL RESPONSE:", data); // 🔍 very important
 
-    let reply = "Koi jawab nahi mila";
+    let reply = "Samajh nahi aaya";
 
-    if (data.candidates && data.candidates.length > 0) {
+    if (
+      data.candidates &&
+      data.candidates[0] &&
+      data.candidates[0].content &&
+      data.candidates[0].content.parts &&
+      data.candidates[0].content.parts[0]
+    ) {
       reply = data.candidates[0].content.parts[0].text;
     }
 
-    aiText.textContent = reply;
+    aiText.innerText = reply;
     speak(reply);
 
-  } catch (error) {
-    aiText.textContent = "Error: Internet ya API problem";
-    console.error(error);
+  } catch (err) {
+    aiText.innerText = "API ya Internet error";
+    console.error(err);
   }
 }
 
-// ========= TEXT TO SPEECH =========
+// Text to Speech
 function speak(text) {
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = "hi-IN";
