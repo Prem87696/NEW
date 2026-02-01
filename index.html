@@ -9,22 +9,40 @@
 
 <p id="ans"></p>
 
-<script id="smart-bot">
+<script>
 function reply() {
   const q = document.getElementById("q").value.toLowerCase().trim();
   let a = "Mujhe samajh nahi aaya 😅";
+
+  const htmlReplies = [
+    "HTML ek markup language hai jo website ka structure banati hai",
+    "HTML se web page ka basic structure tayaar hota hai",
+    "HTML website ki foundation hoti hai"
+  ];
+
+  const cssReplies = [
+    "CSS website ko design aur style karti hai",
+    "CSS se colors, layout aur animation aati hai",
+    "CSS website ko beautiful banati hai"
+  ];
+
+  const jsReplies = [
+    "JavaScript website ko interactive banati hai",
+    "JavaScript logic aur actions handle karti hai",
+    "JavaScript se buttons, forms aur events kaam karte hain"
+  ];
 
   if (q === "") {
     a = "Kuch likho to sahi 🙂";
   }
   else if (q.includes("html")) {
-    a = "HTML ek markup language hai jo website ka structure banati hai";
+    a = random(htmlReplies);
   }
   else if (q.includes("css")) {
-    a = "CSS website ko design aur beautiful banati hai";
+    a = random(cssReplies);
   }
   else if (q.includes("javascript") || q === "js") {
-    a = "JavaScript website ko interactive aur smart banati hai";
+    a = random(jsReplies);
   }
   else if (q.includes("tum kaun ho")) {
     a = "Main PK ka smart chatbot hoon 😎";
@@ -38,7 +56,11 @@ function reply() {
 
   document.getElementById("ans").innerText = a;
 }
-</script>
 
+// random reply function
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+</script>
 </body>
 </html>
