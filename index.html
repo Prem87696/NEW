@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>PK Chatbot (Level-1)</h2>
+
+<input id="q" placeholder="HTML kya hai">
+<button onclick="reply()">Ask</button>
+
+<p id="ans"></p>
+
 <script id="smart-bot">
 function reply() {
   const q = document.getElementById("q").value.toLowerCase().trim();
@@ -28,3 +39,6 @@ function reply() {
   document.getElementById("ans").innerText = a;
 }
 </script>
+
+</body>
+</html>
