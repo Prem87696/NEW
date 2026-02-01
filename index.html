@@ -2,32 +2,27 @@
 <html>
 <body>
 
-<h2>PK AI Test</h2>
+<h2>PK Chatbot (Level-1)</h2>
+
 <input id="q" placeholder="HTML kya hai">
-<button onclick="ask()">Ask</button>
+<button onclick="reply()">Ask</button>
 
 <p id="ans"></p>
 
 <script>
-const API_KEY = "AIzaSyDZZCfe-7-Sz4Dhqab17oOyWP43S7xJrBA";
+function reply() {
+  const q = document.getElementById("q").value.toLowerCase();
+  let a = "Mujhe samajh nahi aaya";
 
-async function ask() {
-  const q = document.getElementById("q").value;
+  if (q.includes("html")) {
+    a = "HTML ek markup language hai jo website banane ke kaam aati hai";
+  } else if (q.includes("css")) {
+    a = "CSS website ko design karne ke liye hoti hai";
+  } else if (q.includes("javascript")) {
+    a = "JavaScript website ko interactive banati hai";
+  }
 
-  const res = await fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: q }] }]
-      })
-    }
-  );
-
-  const data = await res.json();
-  document.getElementById("ans").innerText =
-    data.candidates[0].content.parts[0].text;
+  document.getElementById("ans").innerText = a;
 }
 </script>
 
